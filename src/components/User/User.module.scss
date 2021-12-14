@@ -1,0 +1,18 @@
+.user-page-wrapper {
+  border: 1px solid black;
+  padding: 1rem;
+
+  .profile {
+    display: flex;
+    justify-content: space-between;
+    img {
+      width: 20%;
+    }
+    .info {
+      width: 45%;
+    }
+    .br {
+      border: 1px solid black;
+    }
+  }
+}

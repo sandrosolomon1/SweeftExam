@@ -1,0 +1,14 @@
+.user-grid-element {
+  cursor: pointer;
+  border: 1px solid black;
+  img {
+    width: 100%;
+  }
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+  .bold {
+    font-weight: bolder;
+  }
+}

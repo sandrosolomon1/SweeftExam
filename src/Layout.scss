@@ -1,0 +1,9 @@
+@import "components/Users/Users.module";
+@import "components/Users/UserGridElement/UserGridElement.module";
+@import "components/User/User.module";
+
+.container {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+

@@ -1,12 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import './index.scss';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Layout from "./Layout";
+import Users from "./components/Users/Users";
+import NoMatch from "./components/NoMatch/NoMatch";
+
+const User = React.lazy(() => import("./components/User/User"));
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<Layout />}>
+                  <Route index element={<Users />} />
+                  <Route
+                      path="user/:userid"
+                      element={
+                          <React.Suspense fallback={<>...</>}>
+                              <User />
+                          </React.Suspense>
+                      }
+                  />
+                  <Route path="*" element={<NoMatch />} />
+              </Route>
+          </Routes>
+      </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
