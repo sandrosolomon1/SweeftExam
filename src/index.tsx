@@ -14,7 +14,7 @@ ReactDOM.render(
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<Layout />}>
-                  <Route index element={<Users />} />
+                  <Route index element={<Users options={{allUsers: true}} />} />
                   <Route
                       path="user/:userid"
                       element={

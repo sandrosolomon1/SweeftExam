@@ -8,7 +8,6 @@ export default function InfinityScroll(loading:boolean, hasMore: boolean, setPag
     const observer = useRef<IntersectionObserver | null>(null);
 
     const lastUserRef = useCallback((node) => {
-        // eslint-disable-next-line no-useless-return
         if(loading) return;
 
         /** update last observed node */

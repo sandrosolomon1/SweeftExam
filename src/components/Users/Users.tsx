@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import "./Users.module.scss";
 import UserGridElement from "./UserGridElement/UserGridElement";
-import useFetchUsers, {fetchUsersOptions} from "../../hooks/useFetchUsers";
+import useFetchUsers, {fetchOptions} from "../../hooks/useFetchUsers";
 import {useNavigate} from "react-router-dom";
 import InfinityScroll from "../../services/InfinityScroll.service";
+import {User} from "../../interfaces/User";
 
 interface Props {
-    options?: fetchUsersOptions
+    options?: fetchOptions
 }
 
 /** page_size pagination default value */
@@ -14,21 +15,28 @@ const PAGE_SIZE = 20;
 
 const Users = (props: Props) => {
     const navigate = useNavigate();
+    let List: User[];
 
     const [pageSize,setPageSize] = useState<number>(PAGE_SIZE);
 
-    const {loading, error, usersList, hasMore} = useFetchUsers(0, pageSize, props.options);
-
+    const {loading, error, usersList, friendsList, hasMore} = useFetchUsers(0, pageSize, props.options);
+    console.log(friendsList)
     const lastUserRef = InfinityScroll(loading,hasMore,setPageSize);
 
     function NavigateToUserPage(userId: number | undefined): void {
         navigate(`/user/${userId}`);
     }
 
+    if(props.options?.allUsers) {
+        List = usersList;
+    } else {
+        List = friendsList;
+    }
+
     return (
         <div className="users-grid">
-            {usersList.map((user,idx) => {
-                if(usersList.length-1 === idx) {
+            {List.map((user,idx) => {
+                if(List.length-1 === idx) {
                     return (
                         <div key={idx} ref={lastUserRef} onClick={() => NavigateToUserPage(user.id)}>
                             <UserGridElement User={user} />

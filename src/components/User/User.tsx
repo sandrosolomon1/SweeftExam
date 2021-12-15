@@ -18,6 +18,7 @@ const User = (): JSX.Element => {
         if (typeof userid === "string") {
             sds.getSingleUser(parseInt(userid)).then(user => {
                setCurrentUser(user);
+
                setLoading(false);
             });
         }
@@ -61,7 +62,7 @@ const User = (): JSX.Element => {
             <div className="friends">
                 <h2>Friends</h2>
                 <div className="users">
-                    <Users options={{id: parseInt(userid as string)}} />
+                    <Users options={{allUsers: false, userId: parseInt(userid as string)}} />
                 </div>
             </div>
         </div>
