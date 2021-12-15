@@ -10,18 +10,20 @@ interface Props {
     options?: fetchOptions
 }
 
-/** page_size pagination default value */
-const PAGE_SIZE = 20;
+/** pagination default values */
+const PAGE_SIZE = 10;
+const PAGE = 1;
 
-const Users = (props: Props) => {
+const Users = (props: Props): JSX.Element => {
     const navigate = useNavigate();
     let List: User[];
 
     const [pageSize,setPageSize] = useState<number>(PAGE_SIZE);
+    const [page,setPage] = useState<number>(PAGE);
 
-    const {loading, error, usersList, friendsList, hasMore} = useFetchUsers(0, pageSize, props.options);
-    console.log(friendsList)
-    const lastUserRef = InfinityScroll(loading,hasMore,setPageSize);
+    const {loading, error, usersList, friendsList, hasMore} = useFetchUsers(page, pageSize, props.options);
+
+    const lastUserRef = InfinityScroll(loading,hasMore,setPage);
 
     function NavigateToUserPage(userId: number | undefined): void {
         navigate(`/user/${userId}`);

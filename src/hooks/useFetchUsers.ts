@@ -41,7 +41,7 @@ export default function useFetchUsers(page: number, size: number, options?: fetc
                     return options?.userId;
                 });
             }
-            setHasMore(data.pagination.total !== data.pagination.pageSize);
+            setHasMore(data.pagination.total >= (page * size) );
 
             setLoading(false);
         } catch (err) {
@@ -51,7 +51,7 @@ export default function useFetchUsers(page: number, size: number, options?: fetc
 
     useEffect(() => {
         updatePageState();
-    },[page,size,options?.userId])
+    },[page,options?.userId])
 
     return {loading, error, usersList, friendsList, hasMore};
 }
