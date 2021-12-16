@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {useLocation, useParams, Link} from "react-router-dom";
 import SweeftdigitalService from "../../services/Sweeftdigital.service";
 import {FullUser} from "../../interfaces/User";
 import Users from "../Users/Users";
@@ -9,20 +9,25 @@ const sds = new SweeftdigitalService();
 const User = (): JSX.Element => {
     const {userid} = useParams();
 
+    const location = useLocation();
+    const [history,setHistory] = useState<Array<{ path: string, userName: string }>>([]);
+
     const [currentUser,setCurrentUser] = useState<FullUser | null>(null);
 
     const [loading, setLoading] = useState<boolean>();
 
     useEffect(() => {
-        setLoading(true);
         if (typeof userid === "string") {
             sds.getSingleUser(parseInt(userid)).then(user => {
                setCurrentUser(user);
 
-               setLoading(false);
+               setHistory(prevState => [...prevState, {
+                   path: location.pathname,
+                   userName: `${currentUser?.prefix}.${currentUser?.name} ${currentUser?.lastName}`
+               }])
             });
         }
-    },[userid])
+    },[userid]);
 
     return (
         <div className="user-page-wrapper">
@@ -58,7 +63,18 @@ const User = (): JSX.Element => {
                     </div>
                 </div>
             </div>
-            <div className="route-history"></div>
+            <div className="route-history">
+                {history.map((value,idx) => {
+                    if(value.userName.includes("undefined")) return <></>;
+
+                    return (
+                        <>
+                            <span> - </span>
+                            <Link key={idx} to={value.path}>{value.userName}</Link>
+                        </>
+                    )
+                })}
+            </div>
             <div className="friends">
                 <h2>Friends</h2>
                 <div className="users">
