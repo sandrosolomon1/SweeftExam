@@ -10,7 +10,7 @@ const UserGridElement = (props: Props) => {
 
     return (
       <div className="user-grid-element">
-          <img src={User.imageUrl} alt={User.title}/>
+          <img src={`${User.imageUrl}/${User.id}`} alt={User.title}/>
           <div className="info">
               <div className="bold">{User.prefix + User.name}</div>
               <p>{User.title}r</p>

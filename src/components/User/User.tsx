@@ -33,7 +33,7 @@ const User = (): JSX.Element => {
         <div className="user-page-wrapper">
             {loading && "Loading ..."}
             <div className="profile">
-                <img src={currentUser?.imageUrl} alt={currentUser?.title}/>
+                <img src={`${currentUser?.imageUrl}/${currentUser?.id}`} alt={currentUser?.title}/>
                 <div className="info br">
                     <div className="online">info</div>
                     <div className="id">
